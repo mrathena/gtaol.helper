@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true" scanPeriod="60 seconds" debug="false">
+	<!-- 如果是单纯的使用Main方法的run,则不适合异步日志,因为主线程结束了,日志可能还没有打出来 -->
+	<appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<Pattern>[%date{yyyyMMdd.HHmmss.SSS}][%-5level][%thread] %message%n</Pattern>
+		</encoder>
+	</appender>
+	<root level="trace">
+		<appender-ref ref="console" />
+	</root>
+</configuration>
