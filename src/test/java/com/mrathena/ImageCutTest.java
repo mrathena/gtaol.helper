@@ -22,11 +22,11 @@ public class ImageCutTest {
 
 		save(crop("C:\\Users\\mrathena\\Desktop\\2560.1440.real.png",1184,208, 704,704), "C:\\Users\\mrathena\\Desktop\\big.1.png");
 
-		int baseSmallLeft = 641, baseSmallTop = 370, baseSmallWidth = 142, baseSpace = 50;
+		int baseSmallLeft = 641, baseSmallTop = 370, baseSmallLength = 142, baseSpace = 50;
 		for (int i = 0; i < 8; i ++) {
-			int left = (i % 2 == 0) ? baseSmallLeft : baseSmallLeft + baseSmallWidth + baseSpace;
-			int top = baseSmallTop + (i / 2) * (baseSmallWidth + baseSpace);
-			save(crop("C:\\Users\\mrathena\\Desktop\\2560.1440.real.png",left, top, baseSmallWidth, baseSmallWidth), "C:\\Users\\mrathena\\Desktop\\small.1." + (i + 1) + ".png");
+			int left = (i % 2 == 0) ? baseSmallLeft : baseSmallLeft + baseSmallLength + baseSpace;
+			int top = baseSmallTop + (i / 2) * (baseSmallLength + baseSpace);
+			save(crop("C:\\Users\\mrathena\\Desktop\\2560.1440.real.png",left, top, baseSmallLength, baseSmallLength), "C:\\Users\\mrathena\\Desktop\\small.1." + (i + 1) + ".png");
 		}
 
 	}
