@@ -82,7 +82,7 @@ public class GTAOL {
 						countDownLatch.countDown();
 					}
 				});
-				for (int i = 1; i <= smallRectangleList.size(); i++) {
+				for (int i = 0; i < smallRectangleList.size(); i++) {
 					int index = i;
 					executorService.execute(() -> {
 						try {
