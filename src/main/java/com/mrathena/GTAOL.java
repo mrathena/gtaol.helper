@@ -82,7 +82,7 @@ public class GTAOL {
 						countDownLatch.countDown();
 					}
 				});
-				for (int i = 1; i < smallRectangleList.size(); i++) {
+				for (int i = 1; i <= smallRectangleList.size(); i++) {
 					int index = i;
 					executorService.execute(() -> {
 						try {
@@ -239,6 +239,20 @@ public class GTAOL {
 			}
 			double xRate = newWidth / 2560D;
 			double yRate = newHeight / 1440D;
+			if (newHeight == 1440 && ((double) newWidth / newHeight > (double) 16 / 9)) {
+				LockImage lockImage = new LockImage();
+				int move = (newWidth - 2560) / 2;
+				lockImage.getBig().setX(move + lockImage.getBig().getX());
+				lockImage.getSmall1().setX(move + lockImage.getSmall1().getX());
+				lockImage.getSmall2().setX(move + lockImage.getSmall2().getX());
+				lockImage.getSmall3().setX(move + lockImage.getSmall3().getX());
+				lockImage.getSmall4().setX(move + lockImage.getSmall4().getX());
+				lockImage.getSmall5().setX(move + lockImage.getSmall5().getX());
+				lockImage.getSmall6().setX(move + lockImage.getSmall6().getX());
+				lockImage.getSmall7().setX(move + lockImage.getSmall7().getX());
+				lockImage.getSmall8().setX(move + lockImage.getSmall8().getX());
+				return lockImage;
+			}
 			LockImage lockImage = new LockImage();
 			if (xRate != 1.0) {
 				lockImage.setBigWidth((int) (xRate * lockImage.getBigWidth()));
