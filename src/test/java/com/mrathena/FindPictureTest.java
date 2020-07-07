@@ -61,7 +61,8 @@ public class FindPictureTest {
 
 	public static List<Point> findSmall(int bigIndex) throws Throwable {
 		List<Point> pointList = Collections.synchronizedList(new LinkedList<>());
-		Mat big = Imgcodecs.imread("C:\\Users\\mrathena\\Desktop\\3440.1440.real.png");
+//		Mat big = Imgcodecs.imread("C:\\Users\\mrathena\\Desktop\\3440.1440.real.png");
+		Mat big = Imgcodecs.imread("C:\\Users\\mrathena\\Desktop\\1111.png");
 		CountDownLatch countDownLatch = new CountDownLatch(4);
 		for (int i = 1; i <= 4; i++) {
 			int smallIndex = i;

@@ -26,6 +26,7 @@ public class ImageCutTest {
 		for (int i = 0; i < 8; i ++) {
 			int left = (i % 2 == 0) ? baseSmallLeft : baseSmallLeft + baseSmallLength + baseSpace;
 			int top = baseSmallTop + (i / 2) * (baseSmallLength + baseSpace);
+			log.info("{},{}", left, top);
 			save(crop("C:\\Users\\mrathena\\Desktop\\2560.1440.real.png",left, top, baseSmallLength, baseSmallLength), "C:\\Users\\mrathena\\Desktop\\small.1." + (i + 1) + ".png");
 		}
 
