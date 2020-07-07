@@ -9,6 +9,7 @@ public class ScreenInfoTest {
 
 	public static void main(String[] args) {
 
+		// 当游戏全屏且分辨率与屏幕物理分辨率不同时, 该方法不会返回物理分辨率, 而是返回游戏窗体分辨率
 		// PPI 和 DPI
 		//PPI (Pixels Per Inch) : 即每一英寸长度上有多少个像素点；
 		//DPI (Dots Per Inch): 即每一英寸上有多少个点；
@@ -26,7 +27,7 @@ public class ScreenInfoTest {
 		// 计算英寸, 1英寸=2.54厘米
 		log.info("{},{},{},{}", pxWidth, pxHeight, dpi, size);
 
-		//
+		// 当游戏全屏且分辨率与屏幕物理分辨率不同时, 该方法不会返回物理分辨率, 而是返回游戏窗体分辨率
 		GraphicsEnvironment graphicsEnvironment = GraphicsEnvironment.getLocalGraphicsEnvironment();
 		GraphicsDevice[] devices = graphicsEnvironment.getScreenDevices();
 
@@ -35,6 +36,10 @@ public class ScreenInfoTest {
 			System.out.println("Height:" + devices[i].getDisplayMode().getHeight());
 			System.out.println(devices[i].getDisplayMode());
 		}
+
+		GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
+		int width = gd.getDisplayMode().getWidth();
+		int height = gd.getDisplayMode().getHeight();
 
 	}
 
