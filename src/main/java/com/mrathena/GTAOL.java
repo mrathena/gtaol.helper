@@ -88,7 +88,7 @@ public class GTAOL {
 						try {
 							Rectangle rectangle = smallRectangleList.get(index);
 							BufferedImage subImage = screenshot.getSubimage((int) rectangle.getX(), (int) rectangle.getY(), (int) rectangle.getWidth(), (int) rectangle.getHeight());
-							ImageIO.write(subImage, "png", new File("C:\\Users\\mrathena\\Desktop\\test." + index + ".png"));
+							ImageIO.write(subImage, "png", new File("C:\\Users\\mrathena\\Desktop\\test." + (index + 1) + ".png"));
 						} catch (Throwable cause) {
 							log.error("", cause);
 						} finally {
