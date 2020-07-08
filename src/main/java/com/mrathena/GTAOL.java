@@ -1,6 +1,7 @@
 package com.mrathena;
 
 import com.melloware.jintellitype.JIntellitype;
+import com.mrathena.toolkit.ThreadKit;
 import com.sun.jna.platform.win32.User32;
 import com.sun.jna.platform.win32.WinDef;
 import com.sun.jna.platform.win32.WinUser;
@@ -64,39 +65,51 @@ public class GTAOL {
 				boolean isMatchPhysicalResolution = rcClient.bottom - rcClient.top == height;
 				log.info("isNonBorderWindow:{}, isFullScreenWindow:{}, isMatchPhysicalResolution:{}", isNonBorderWindow, isFullScreenWindow, isMatchPhysicalResolution);
 
-				BufferedImage screenshot = (new Robot()).createScreenCapture(new Rectangle(0, 0, width, height));
-				ImageIO.write(screenshot, "png", new File("C:\\Users\\mrathena\\Desktop\\test.png"));
-				LockImage lockImage = LockImage.getNewLockImage(width, height);
-				Rectangle bigRectangle = lockImage.getBigRectangle();
-				List<Rectangle> smallRectangleList = lockImage.getSmallRectangleList();
+				for (int i = 1; i <= 4; i++) {
 
-				ExecutorService executorService = Executors.newFixedThreadPool(9);
-				CountDownLatch countDownLatch = new CountDownLatch(9);
-				executorService.execute(() -> {
-					try {
-						BufferedImage subImage = screenshot.getSubimage((int) bigRectangle.getX(), (int) bigRectangle.getY(), (int) bigRectangle.getWidth(), (int) bigRectangle.getHeight());
-						ImageIO.write(subImage, "png", new File("C:\\Users\\mrathena\\Desktop\\test.png"));
-					} catch (Throwable cause) {
-						log.error("", cause);
-					} finally {
-						countDownLatch.countDown();
-					}
-				});
-				for (int i = 0; i < smallRectangleList.size(); i++) {
-					int index = i;
+					log.info("{}", i);
+
+					BufferedImage screenshot = (new Robot()).createScreenCapture(new Rectangle(0, 0, width, height));
+//					ImageIO.write(screenshot, "png", new File("C:\\Users\\mrathena\\Desktop\\test.png"));
+					LockImage lockImage = LockImage.getNewLockImage(width, height);
+					Rectangle bigRectangle = lockImage.getBigRectangle();
+					List<Rectangle> smallRectangleList = lockImage.getSmallRectangleList();
+
+					ExecutorService executorService = Executors.newFixedThreadPool(9);
+					CountDownLatch countDownLatch = new CountDownLatch(9);
+
+					final int bigIndex = i;
 					executorService.execute(() -> {
 						try {
-							Rectangle rectangle = smallRectangleList.get(index);
-							BufferedImage subImage = screenshot.getSubimage((int) rectangle.getX(), (int) rectangle.getY(), (int) rectangle.getWidth(), (int) rectangle.getHeight());
-							ImageIO.write(subImage, "png", new File("C:\\Users\\mrathena\\Desktop\\test." + (index + 1) + ".png"));
+							BufferedImage subImage = screenshot.getSubimage((int) bigRectangle.getX(), (int) bigRectangle.getY(), (int) bigRectangle.getWidth(), (int) bigRectangle.getHeight());
+							ImageIO.write(subImage, "png", new File("C:\\Users\\mrathena\\Desktop\\" + bigIndex + ".png"));
 						} catch (Throwable cause) {
 							log.error("", cause);
 						} finally {
 							countDownLatch.countDown();
 						}
 					});
+					for (int j = 0; j < smallRectangleList.size(); j++) {
+						final int smallIndex = j;
+						executorService.execute(() -> {
+							try {
+								Rectangle rectangle = smallRectangleList.get(smallIndex);
+								BufferedImage subImage = screenshot.getSubimage((int) rectangle.getX(), (int) rectangle.getY(), (int) rectangle.getWidth(), (int) rectangle.getHeight());
+								ImageIO.write(subImage, "png", new File("C:\\Users\\mrathena\\Desktop\\" + bigIndex + "." + (smallIndex + 1) + ".png"));
+							} catch (Throwable cause) {
+								log.error("", cause);
+							} finally {
+								countDownLatch.countDown();
+							}
+						});
+					}
+					countDownLatch.await(10, TimeUnit.SECONDS);
+
+					log.info("{} finish", i);
+
+					ThreadKit.sleep(30, TimeUnit.SECONDS);
+
 				}
-				countDownLatch.await(10, TimeUnit.SECONDS);
 
 				// 游戏存在开始找图
 				log.info("over in {}ms", System.currentTimeMillis() - start);
@@ -113,6 +126,13 @@ public class GTAOL {
 			System.exit(0);
 		}).register();
 		hotKeyMap.put(f11.getIdentifier(), f11);
+
+		log.info("init: create hotkey f12");
+		HotKey f12 = new HotKey(Key.F12, () -> {
+			log.info("f12");
+		}).register();
+		hotKeyMap.put(f12.getIdentifier(), f12);
+
 
 		log.info("init: add hotkey listener");
 		JIntellitype.getInstance().addHotKeyListener(identifier -> {
@@ -170,7 +190,9 @@ public class GTAOL {
 	@AllArgsConstructor
 	public enum Key {
 		F10(121),
-		F11(122);
+		F11(122),
+		F12(123),
+		;
 		private final int value;
 	}
 
