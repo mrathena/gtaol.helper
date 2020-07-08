@@ -32,8 +32,11 @@ public class GTAOL {
 
 	public static void main(String[] args) {
 
-		log.info("init: create hotkey f10");
-		HotKey f10 = new HotKey(Key.F10, () -> {
+		log.info("init: create hotkey F5");
+		HotKey f5 = new HotKey(Key.F5, () -> {
+			if (true) {
+				return;
+			}
 			try {
 				log.info("");
 				long start = System.currentTimeMillis();
@@ -117,22 +120,50 @@ public class GTAOL {
 				log.error("", cause);
 			}
 		}).register();
+		hotKeyMap.put(f5.getIdentifier(), f5);
+
+		log.info("init: create hotkey F6");
+		HotKey f6 = new HotKey(Key.F6, () -> {
+			log.info("");
+			log.info("F6");
+		}).register();
+		hotKeyMap.put(f6.getIdentifier(), f6);
+
+		log.info("init: create hotkey F7");
+		HotKey f7 = new HotKey(Key.F7, () -> {
+			log.info("");
+			log.info("F7");
+		}).register();
+		hotKeyMap.put(f7.getIdentifier(), f7);
+
+		log.info("init: create hotkey F8");
+		HotKey f8 = new HotKey(Key.F8, () -> {
+			log.info("");
+			log.info("F8");
+		}).register();
+		hotKeyMap.put(f8.getIdentifier(), f8);
+
+		log.info("init: create hotkey F9");
+		HotKey f9 = new HotKey(Key.F9, () -> {
+			log.info("");
+			log.info("F9");
+		}).register();
+		hotKeyMap.put(f9.getIdentifier(), f9);
+
+		log.info("init: create hotkey F10");
+		HotKey f10 = new HotKey(Key.F10, () -> {
+			log.info("");
+			log.info("F10");
+		}).register();
 		hotKeyMap.put(f10.getIdentifier(), f10);
 
-		log.info("init: create hotkey f11");
+		log.info("init: create hotkey F11");
 		HotKey f11 = new HotKey(Key.F11, () -> {
 			log.info("");
 			log.info("main thread will quit after unregister all hotkeys");
 			System.exit(0);
 		}).register();
 		hotKeyMap.put(f11.getIdentifier(), f11);
-
-		log.info("init: create hotkey f12");
-		HotKey f12 = new HotKey(Key.F12, () -> {
-			log.info("f12");
-		}).register();
-		hotKeyMap.put(f12.getIdentifier(), f12);
-
 
 		log.info("init: add hotkey listener");
 		JIntellitype.getInstance().addHotKeyListener(identifier -> {
@@ -189,9 +220,13 @@ public class GTAOL {
 	@Getter
 	@AllArgsConstructor
 	public enum Key {
+		F5(116),
+		F6(117),
+		F7(118),
+		F8(119),
+		F9(120),
 		F10(121),
 		F11(122),
-		F12(123),
 		;
 		private final int value;
 	}
